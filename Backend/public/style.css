@@ -1,0 +1,21 @@
+body{
+    background-color: black;
+    color:white;
+    
+}
+.post{
+    background-color: #f0f0f01e;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+.btn{
+    background-color: #4ed452;
+    color: white;
+    border:3px solid #4ed452;
+    border-radius: 1rem;
+    margin-left: 45%;
+    padding: .7rem;
+    
+    font-weight: 500;
+}
