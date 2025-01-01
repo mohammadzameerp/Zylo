@@ -6,10 +6,12 @@ const path = require("path");
 
 //----------this is a package to create a unique id to the post
 const { v4: uuidv4 } = require("uuid");
+const methodOverride = require("method-override");
 
 //to understand input from user side
 app.use(express.urlencoded({ extended: true })); //--------URL input
 app.use(express.json()); //------------JSON input
+app.use(methodOverride("_method"));
 
 //setting view engine foe views folder
 app.set("view engine", "ejs");
@@ -23,7 +25,7 @@ app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
 
-//--------------------------------------------------------------------------------------Home page---------------------------------------------------
+//--------------------------------------------------------------------------------------Home page  GET---------------------------------------------------
 
 //-------let allows the data push & delete   but in const only we can push
 let posts = [
@@ -44,7 +46,7 @@ app.get("/posts", (req, res) => {
   res.render("index", { posts });
 });
 
-//--------------------------------------------------------------------------------------Create Post Page---------------------------------------------------
+//--------------------------------------------------------------------------------------Create Post Page (GET/POST)---------------------------------------------------
 
 app.get("/posts/new", (req, res) => {
   res.render("new");
@@ -60,10 +62,35 @@ app.post("/posts", (req, res) => {
   res.redirect("/posts");
 });
 
-//--------------------------------------------------------------------------------------View Post Page---------------------------------------------------
+//--------------------------------------------------------------------------------------View Post Page  (GET)---------------------------------------------------
 
 app.get("/posts/:id", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => id === p.id);
   res.render("show", { post });
+});
+
+//--------------------------------------------------------------------------------------Update Post Page---------------------------------------------------
+
+app.put("/posts/:id", (req, res) => {
+  let { id } = req.params;
+  let newContent = req.body.content;
+  let post = posts.find((p) => id === p.id);
+  post.content = newContent;
+  // res.send("post updated");
+  res.redirect("/posts");
+  // console.log(post);
+});
+
+app.get("/posts/:id/edit", (req, res) => {
+  let { id } = req.params;
+  let post = posts.find((p) => id === p.id);
+  res.render("edit", { post });
+});
+
+app.delete("/posts/:id", (req, res) => {
+  let { id } = req.params;
+  let pi = posts.findIndex((p) => id === p.id);
+  posts.splice(pi, 1);
+  res.redirect("/posts");
 });
