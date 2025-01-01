@@ -43,7 +43,7 @@ let posts = [
 
 //--------Home page URL
 app.get("/posts", (req, res) => {
-  res.render("index", { posts });
+  res.render("main", { posts });
 });
 
 //--------------------------------------------------------------------------------------Create Post Page (GET/POST)---------------------------------------------------
