@@ -2,9 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/logoA.png" />
-    <link rel="stylesheet" href="/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -12,21 +9,15 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    
-    <title>Zylo</title>
+    <link rel="icon" href="" />
+    <link rel="icon" href="/logoA.png" />
+    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Zylo</title>
   </head>
   <body>
-    <div class="head">
-      <h1>
-        <i
-          style="background-color: white; color: black"
-          class="fa-solid fa-ghost"
-          id="hi"
-        ></i
-        ><strong>Zylo</strong>
-      </h1>
-      <p class="ap">(Anonymous Post)</p>
-    </div>
+    <div class="head"><h1>Explore Zylo's</h1></div>
+
     <div class="main">
       <div class="sidebar">
         <a href="http://zylo.onrender.com/posts"
@@ -41,8 +32,8 @@
           ><i class="fa-solid fa-plus" id="crt"></i>
           <p class="nam">Create</p></a
         >
-        <a
-          href="https://wa.me/?text=Hey! 👋 I just discovered Zylo, an amazing platform where you can create and explore anonymous posts. 📝✨ Share your thoughts, humor, and ideas freely without holding back! 😄 Check it out and start posting today: https://zylo.onrender.com/posts . Let's see what the world thinks of your Zylo! 🚀" target="_blank"><i class="fa-solid fa-share"></i>
+        <a href="https://wa.me/?text=Hey! 👋 I just discovered Zylo, an amazing platform where you can create and explore anonymous posts. 📝✨ Share your thoughts, humor, and ideas freely without holding back! 😄 Check it out and start posting today: https://zylo.onrender.com/posts . Let's see what the world thinks of your Zylo! 🚀" target="_blank"
+          ><i class="fa-solid fa-share"></i>
           <p class="nam">Share</p></a
         >
         <a href="http://zylo.onrender.com/posts/about"
@@ -67,130 +58,19 @@
           </svg>
         </div>
       </div>
-
-      <div class="homePost">
-        <p style="font-size: .8rem;">𝔸 𝕡𝕣𝕠𝕕𝕦𝕔𝕥 𝕠𝕗 𝕔𝕠𝕕𝕖, 𝕕𝕖𝕤𝕚𝕘𝕟𝕖𝕕 𝕓𝕪 ℤ𝕒𝕞𝕖𝕖𝕣</p>
-        <!-- ____GET Request Home page____ -->
-        <!-- this is the for each loop for displaying the posts on the /posts page -->
-        <% for(post of posts){ %>
-        <div class="post">
-          <!-- <i id="more" class="fa-solid fa-ellipsis-vertical"></i> -->
-          <div class="checkbox-dropdown">
-            <div class="dropdown-content" id="more">
-              <label>
-                <a href="http://localhost:3000/posts/<%=post.id%>">View</a>
-              </label>
-              <label>
-                <a href="http://localhost:3000/posts/<%=post.id%>/edit">Edit</a>
-              </label>
-              <label>
-                <form
-                  action="/posts/<%= post.id %>?_method=DELETE"
-                  method="post"
-                  onsubmit="return confirmDeletion('<%= post.id %>');"
-                >
-                  <input
-                    type="hidden"
-                    name="password"
-                    id="password-<%= post.id %>"
-                  />
-                  <button class="dlt">Delete</button>
-                </form>
-              </label>
-            </div>
-            <button class="dropdown-button" id="more">
-              <i id="" class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-          </div>
-          <a style="opacity: 1" href="http://localhost:3000/posts/<%=post.id%>">
-            <pre class="content">
-            <%=post.content%>
-   
-          </pre
-            >
+      <div class="homeP">
+        <% posts.forEach(post => { %>
+        <div class="e-content">
+          <a href="http://localhost:3000/posts/<%=post.id%>">
+            <pre><%= post.content %></pre>
           </a>
-          <div class="fl">
-            <div class="post2">
-              <p class="username"><%=post.username%></p>
-              <div class="time">
-                <p><%= post.timestamp %></p>
-                <p><%= post.location %></p>
-              </div>
-            </div>
-            <div
-              class="likes"
-              onclick="likepost('<%= post.id%>')"
-              data-id="<%= post.id%>"
-            >
-              <button id="likes-<%=post.id%>" class="lik">❤️</button>
-
-              <p><%= post.likes%></p>
-            </div>
-          </div>
         </div>
-
-        <%}%>
-        <!-- Display error message if exists -->
-        <% if (typeof error !== "undefined") { %>
-          <div class="errg" style="color: red; font-weight: bold;"><%= error %></div>
-          <% } %>
+        <br /><br />
+        <% }) %>
+        <br><br>
+        <p style="font-size: .8rem;width: 100%;display: flex;align-items: center;justify-content: center;">𝔸 𝕡𝕣𝕠𝕕𝕦𝕔𝕥 𝕠𝕗 𝕔𝕠𝕕𝕖, 𝕕𝕖𝕤𝕚𝕘𝕟𝕖𝕕 𝕓𝕪 ℤ𝕒𝕞𝕖𝕖𝕣</p><br><br><br><br><br><br>
       </div>
+      <br><br>
     </div>
-
-    <!-- _____________________________________________________________________________ -->
-
-    <br /><br />
-    <!-- this is a button to serve CREATE POST page -->
-
-    <script>
-      // JavaScript function to handle password prompt and deletion confirmation
-      function confirmDeletion(postId) {
-        const password = prompt("Enter the password for this post:");
-        if (password) {
-          document.getElementById(`password-${postId}`).value = password;
-          return true; // Submit the form if password is entered
-        }
-        return false; // Prevent form submission if no password is provided
-      }
-
-      document.querySelectorAll(".likes").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const postId = button.getAttribute("data-id");
-
-          try {
-            const response = await fetch(`/posts/${postId}/like`, {
-              method: "POST",
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-              // Update the like count on the page
-              document.getElementById(`likes-${postId}`).textContent =
-                data.likes;
-            } else {
-              console.error(data.error);
-            }
-          } catch (error) {
-            console.error("Error liking post:", error);
-          }
-        });
-      });
-
-      function likePost(postId) {
-        fetch(`/posts/${postId}/like`, {
-          method: "POST",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.likes !== undefined) {
-              document.getElementById(`likes-${postId}`).textContent =
-                data.likes;
-            } else {
-              alert("Error: " + data.error);
-            }
-          })
-          .catch((error) => console.error("Error:", error));
-      }
-    </script>
   </body>
 </html>

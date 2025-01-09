@@ -33,11 +33,19 @@ let posts = [
     id: uuidv4(),
     username: "Mohammad",
     content: "Allah bless all his belivers....",
+    password: "123456",
+    timestamp: new Date().toLocaleString(),
+    location: "Location not provided",
+    likes: 0,
   },
   {
     id: uuidv4(),
     username: "Zameer",
     content: "beshak sahi hai",
+    password: "123456",
+    timestamp: new Date().toLocaleString(),
+    location: "Location not provided",
+    likes: 0,
   },
 ];
 
@@ -49,14 +57,26 @@ app.get("/posts", (req, res) => {
 //--------------------------------------------------------------------------------------Create Post Page (GET/POST)---------------------------------------------------
 
 app.get("/posts/new", (req, res) => {
-  res.render("new");
+  res.render("new"); //--------err
+});
+
+app.get("/posts/explore",(req,res)=>{
+  const shuffledPosts = [...posts].sort(() => Math.random() - 0.5); // Shuffle posts
+  res.render("explore",{ posts: shuffledPosts });
+});
+
+app.get("/posts/about",(req,res)=>{
+  res.render("about");
 });
 
 //-------return back to home page
-app.post("/posts", (req, res) => {
-  let { username, content } = req.body;
+app.post("/posts", async (req, res) => {
+  let { username, content, password, location: userLocation } = req.body;
   let id = uuidv4();
-  posts.push({ id, username, content });
+  const timestamp = new Date().toLocaleString();
+  const likes = 0;
+  const location = userLocation || "Location not provided";
+  posts.push({ id, username, content, password, timestamp, location, likes });
   //res.send(req.body);
   //--------redirect will go back to Home page
   res.redirect("/posts");
@@ -72,14 +92,56 @@ app.get("/posts/:id", (req, res) => {
 
 //--------------------------------------------------------------------------------------Update Post Page---------------------------------------------------
 
+app.post("/posts/:id/like", (req, res) => {
+  const id = req.params.id;
+  const post = posts.find((post) => post.id === id);
+  if (post) {
+    post.likes += 1;
+    res.status(200).send({ likes: post.likes });
+  } else {
+    res.status(200).send({ error: "Post not found" });
+  }
+});
+
+// app.put("/posts/:id", (req, res) => {
+//   let { id } = req.params;
+//   let newContent = req.body.content;
+//   let post = posts.find((p) => id === p.id);
+//   if (post.password === password) {
+//     // If password matches, delete the post
+//     post.content = newContent;
+//     res.redirect("/posts");
+//   } else {
+//     // If password is incorrect
+//     res.render("index", {
+//       posts,
+//       error: "Incorrect password. Post not deleted.",
+//     });
+//   }
+//   // post.content = newContent;
+//   // res.send("post updated");
+//   // res.redirect("/posts");
+//   // console.log(post);
+// });
+
 app.put("/posts/:id", (req, res) => {
   let { id } = req.params;
-  let newContent = req.body.content;
+  let { content, password } = req.body;
   let post = posts.find((p) => id === p.id);
-  post.content = newContent;
-  // res.send("post updated");
-  res.redirect("/posts");
-  // console.log(post);
+
+  if (!post) {
+    return res.render("index", { posts, error: "Post not found." });
+  }
+
+  if (post.password === password) {
+    post.content = content;
+    res.redirect("/posts");
+  } else {
+    res.render("edit", {
+      post,
+      error: "Incorrect password. Edit not allowed.",
+    });
+  }
 });
 
 app.get("/posts/:id/edit", (req, res) => {
@@ -88,9 +150,40 @@ app.get("/posts/:id/edit", (req, res) => {
   res.render("edit", { post });
 });
 
+// app.delete("/posts/:id", (req, res) => {
+//   let { id } = req.params;
+//   let {password}=req.body;
+//   let pi = posts.findIndex((p) => id === p.id);
+//  posts.splice(pi, 1);
+//   res.redirect("/posts");
+// });
+
 app.delete("/posts/:id", (req, res) => {
-  let { id } = req.params;
-  let pi = posts.findIndex((p) => id === p.id);
-  posts.splice(pi, 1);
-  res.redirect("/posts");
+  const { id } = req.params;
+  const { password } = req.body;
+
+  // Find the post by ID
+  const postIndex = posts.findIndex((post) => post.id === id);
+
+  if (postIndex === -1) {
+    // If post not found
+    return res.render("index", {
+      posts,
+      error: "Post not found.",
+    });
+  }
+
+  const post = posts[postIndex];
+
+  if (post.password === password) {
+    // If password matches, delete the post
+    posts.splice(postIndex, 1);
+    res.redirect("/posts");
+  } else {
+    // If password is incorrect
+    res.render("index", {
+      posts,
+      error: "Incorrect password. Post not deleted.",
+    });
+  }
 });
