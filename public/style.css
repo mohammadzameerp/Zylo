@@ -76,19 +76,6 @@ body {
   color: rgb(166, 166, 166);
   font-size: 0.6rem;
 }
-/* #more {
-  background-color: rgb(255, 255, 255);
-  color: black;
-  border: none;
-  align-content: center;
-  /* position: relative;
-  right: -27.4rem;
-  top: -19.5rem; */
-/* cursor: pointer;
-  padding: 4px;
-  margin-left: 100%; */
-/* }  */
-
 /* Dropdown container */
 .checkbox-dropdown {
   position: absolute;
@@ -326,7 +313,7 @@ i {
   }
   /* this is for mobile view */
   .sidebar {
-    height: 2rem;
+    height: 2.6rem;
     width: 90vw;
     background-color: #1a1a1a;
     padding: 0.5rem;
