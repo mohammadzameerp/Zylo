@@ -306,9 +306,11 @@ i {
   }
   .homeP {
     width: 100%;
+    display:flex;
+    justify-content:center;
   }
   .e-content {
-    width: 7rem;
+    width: 9rem;
     height: 7rem;
   }
   /* this is for mobile view */
