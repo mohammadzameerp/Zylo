@@ -377,6 +377,7 @@ i {
     /* white-space: pre-wrap;
    word-wrap: break-word; */
     width: 90%;
+    font-size: 20px;
     height: 18rem;
     background-color: #161616;
     margin-top: 0.1rem;
