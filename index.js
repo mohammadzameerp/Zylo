@@ -27,7 +27,7 @@ app.listen(port, () => {
 
 //--------------------------------------------------------------------------------------Home page  GET---------------------------------------------------
 
-//-------let allows the data push & delete   but in const only we can push
+//-------let allows the data push & delete   but in const only we cannot push
 let posts = [
   {
     id: uuidv4(),
