@@ -19,23 +19,6 @@ Experience Zylo live: https://zylo.onrender.com/posts
 
 ---
 
-## 🛠️ Tech Stack
-Zylo is built with technologies to deliver a robust and scalable experience:
-- **Frontend:** EJS Templates, CSS
-- **Backend:** Node.js, Express.js
-- **Styling:** CSS with custom responsive designs
-- **Additional Libraries:** Font Awesome for icons
-
----
-
-## 🎯 Goals
-Zylo was created to:
-- Creativity and interaction in a judgment-free zone.
-- Provide a platform for users to share their thoughts and explore content anonymously.
-- Combine innovation with ease of use, ensuring accessibility for all.
-
----
-
 ## 💻 Installation & Setup Locally
 To run Zylo locally on your system:
 1. Clone the repository:
