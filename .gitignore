@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+server/.env
+
+# Build output
+client/dist/
+build/
+
+# Uploads (keep directory, ignore files)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Legacy backup
+_legacy/
+
+# Local MongoDB database and portable binaries
+mongodb-win32-x86_64-windows-7.0.12/
+mongodb_data/
+
