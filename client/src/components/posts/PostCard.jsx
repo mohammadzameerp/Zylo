@@ -15,6 +15,7 @@ import {
 import TimeAgo from 'react-timeago';
 import toast from 'react-hot-toast';
 import { likePost, bookmarkPost, reportPost } from '../../features/posts/postSlice';
+import { SERVER_URL } from '../../services/api';
 
 const categoryColors = {
   general: 'bg-blue-500/15 text-blue-400 border-blue-500/20',
@@ -171,8 +172,8 @@ export default function PostCard({ post, showFull = false }) {
               post.image.startsWith('http')
                 ? post.image
                 : post.image.startsWith('/uploads')
-                ? post.image
-                : `/uploads/${post.image}`
+                ? `${SERVER_URL}${post.image}`
+                : `${SERVER_URL}/uploads/${post.image}`
             }
             alt="Post"
             className="w-full max-h-[450px] sm:max-h-[550px] object-contain rounded-xl"
