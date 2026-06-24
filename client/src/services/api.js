@@ -1,7 +1,22 @@
 import axios from 'axios';
 
+// Dynamically determine the backend URL
+const getBackendUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  // Fallback to local development proxy in dev mode, or the deployed Render URL in production
+  if (import.meta.env.DEV) {
+    return '/api';
+  }
+  return 'https://zylo-backend-7ode.onrender.com/api';
+};
+
+export const API_URL = getBackendUrl();
+export const SERVER_URL = API_URL.endsWith('/api') ? API_URL.slice(0, -4) : API_URL;
+
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
