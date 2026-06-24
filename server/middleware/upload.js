@@ -2,24 +2,11 @@ const multer = require('multer');
 const path = require('path');
 const ErrorResponse = require('../utils/ErrorResponse');
 
-// Resolve the uploads directory relative to the server root
-const uploadsDir = path.join(__dirname, '..', 'uploads');
-
 /**
- * Multer disk storage configuration.
- * Stores files in server/uploads/ with unique filenames.
+ * Multer memory storage configuration.
+ * Stores files in memory as a Buffer object.
  */
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadsDir);
-  },
-  filename: function (req, file, cb) {
-    // Generate unique filename: fieldname-timestamp-random.extension
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 /**
  * File filter: Accept only image files (jpeg, jpg, png, gif, webp).
