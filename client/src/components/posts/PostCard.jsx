@@ -169,7 +169,7 @@ export default function PostCard({ post, showFull = false }) {
         <div className="mb-4 rounded-xl overflow-hidden bg-dark-600/30 flex justify-center border border-white/5">
           <img
             src={
-              post.image.startsWith('http')
+              post.image.startsWith('http') || post.image.startsWith('data:')
                 ? post.image
                 : post.image.startsWith('/uploads')
                 ? `${SERVER_URL}${post.image}`
