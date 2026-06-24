@@ -37,8 +37,8 @@ const deletePost = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Post not found with id of ${req.params.id}`, 404));
   }
 
-  // Delete the associated image file if it exists
-  if (post.image) {
+  // Delete the associated image file if it exists on disk
+  if (post.image && post.image.startsWith('/uploads')) {
     const imagePath = path.join(__dirname, '..', post.image);
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);

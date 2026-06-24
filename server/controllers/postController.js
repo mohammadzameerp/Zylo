@@ -127,9 +127,10 @@ const createPost = asyncHandler(async (req, res, next) => {
       : tags.split(',').map((t) => t.trim().toLowerCase());
   }
 
-  // Handle uploaded image
+  // Handle uploaded image (convert memory buffer to base64 Data URI)
   if (req.file) {
-    postData.image = `/uploads/${req.file.filename}`;
+    const base64Image = req.file.buffer.toString('base64');
+    postData.image = `data:${req.file.mimetype};base64,${base64Image}`;
   }
 
   let post = await Post.create(postData);
@@ -215,8 +216,8 @@ const deletePost = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Not authorized to delete this post', 403));
   }
 
-  // Delete the associated image file if it exists
-  if (post.image) {
+  // Delete the associated image file if it exists on disk
+  if (post.image && post.image.startsWith('/uploads')) {
     const imagePath = path.join(__dirname, '..', post.image);
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
